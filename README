@@ -1,0 +1,6 @@
+Make sure that Yipit's django-imagekit fork is added to your PYTHONPATH.
+For example:
+
+    $ PYTHONPATH=$PYTHONPATH:/u/dfstern/course/cs132/django-imagekit ./manage.py test
+
+would run the manage.py script, and try to test the codebase.
