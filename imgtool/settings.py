@@ -55,6 +55,9 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = ''
 
+# Cross your fingers.
+CACHE_BACKEND = 'file:///var/tmp/django-cache'
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -73,6 +76,8 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware'
 )
 
 ROOT_URLCONF = 'imgtool.urls'
@@ -84,10 +89,14 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'imagekit'
+    'imagekit',
+    'testsite'
 )
