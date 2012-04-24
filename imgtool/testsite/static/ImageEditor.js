@@ -5,6 +5,8 @@ var lastMouseX;
 var lastMouseY;
 
 $(document).ready(function(){
+  var fileInput = $('#id_original_image')[0];
+  fileInput.addEventListener('change', load_pic);
 	var canvas = $('#mainCanvas')[0];
 	canvas.addEventListener('mousemove', mouseDrag);
 	canvas.addEventListener('mouseup', mouseUp);
@@ -141,9 +143,8 @@ function updateCanvas()
 	fillSelectionForm();
 }
 
-function load_pic()
+function load_pic(evt)
 {
-	var path = $('#path')[0].value;
 	var thumbnail = $('#thumbnail')[0];
 	var full = $('#full')[0];
 	var full_style = $('#full');
@@ -155,7 +156,7 @@ function load_pic()
 		var original_width = imgObj.width;
 		var original_height = imgObj.height;
 		//Deal with preview mode
-		full.src = path;
+		full.src = imgObj.src;
 		full_style.css('height', thumb_dimension);
 		full_style.css('width', (full.height/original_height)*original_width);
 		
@@ -181,11 +182,26 @@ function load_pic()
 		}
 		selection.rightX = selection.X + selection.width;
 		selection.botY = selection.Y + selection.height;
-		thumbnail.src = path;
+		thumbnail.src = imgObj.src;
 		updateThumbnail();
 		updateCanvas();
 	}
-	imgObj.src = path;
+	
+  var files = evt.target.files;
+
+  for (var i = 0, f; f= files[i]; i++) {
+    if (!f.type.match('image.*')) {
+      continue;
+    }
+
+    var reader = new FileReader();
+    reader.onload = (function(theFile) {
+      return function(e) {
+        imgObj.src = e.target.result;
+      };
+    }) (f);
+    reader.readAsDataURL(f);
+  }
 }
 
 function mouseDown(e)
