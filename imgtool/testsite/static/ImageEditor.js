@@ -95,10 +95,10 @@ function updateSelection()
 
 function fillSelectionForm()
 {
-	$('#selectX')[0].value= Math.floor(selection.X);
-	$('#selectY')[0].value = Math.floor(selection.Y);
-	$('#selectWidth')[0].value = Math.floor(selection.width);
-	$('#selectHeight')[0].value = Math.floor(selection.height);	
+	$('#id_xCorner')[0].value= Math.floor(selection.X);
+	$('#id_yCorner')[0].value = Math.floor(selection.Y);
+	$('#id_width')[0].value = Math.floor(selection.width);
+	$('#id_height')[0].value = Math.floor(selection.height);	
 }
 
 //calls updateSelection
