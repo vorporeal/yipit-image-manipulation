@@ -1,5 +1,7 @@
 # Django settings for imgtool project.
 
+import os
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -48,12 +50,12 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(os.path.expanduser('~'), 'course/cs132/yipit/imgtool/testsite/static/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/static/'
 
 # Cross your fingers.
 CACHE_BACKEND = 'file:///var/tmp/django-cache'
@@ -62,6 +64,7 @@ CACHE_BACKEND = 'file:///var/tmp/django-cache'
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
+STATIC_URL = '/static/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 's2oqayqp1xt7(7th4(aed-r98hh1+0)w&l!$04t-9m6f=be!83'
@@ -75,8 +78,8 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware'
 )
 
@@ -86,7 +89,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/u/bgleib/courses/cs132/yipit/yipit-image-manipulation/imgtool/templates'
+    os.path.join(os.path.expanduser('~'), 'course/cs132/yipit/imgtool/templates')
 )
 
 INSTALLED_APPS = (

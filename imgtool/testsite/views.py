@@ -6,10 +6,10 @@ from django.shortcuts import render_to_response
 
 def form(request):
   if request.method == 'POST':
-    form = DealPhotoForm(request.POST)
-    dealPhotoModel = form.save()
-    model.save()
+    form = DealPhotoForm(request.POST, request.FILES)
+    if form.is_valid():
+      dealPhotoModel = form.save()
   else:
     form = DealPhotoForm()
 
-  return render_to_response('form.html', {'form': form}, context_instance=RequestContext(request))
+  return render_to_response('form.html', {'form': form})

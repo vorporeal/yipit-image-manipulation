@@ -1,8 +1,49 @@
 <html>
-<body>
-	<form action="/testsite/form.html" method="post"> {% csrf_token %}
-	{{ form.as_p }}
-<input type="submit" value="Submit" />
-</form>
-</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Image Editor</title>
+        <link rel="stylesheet" href="/static/style_base.css" type="text/css" />
+        <script src="/static/jquery.js" type="text/javascript"></script>
+        <script src="/static/ImageEditor.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <form enctype="multipart/form-data" action="/testsite/form.html" method="post">
+            {{ form.as_p }}
+            <div id="editDiv">
+                <canvas id="mainCanvas" width="300px" height="180px">
+                If you can read this, your browser doesn't support the canvas element.
+                </canvas>
+                <p class="edit" onclick="preview_mode()">
+                <span class="brace"> [ </span> Done <span class="brace">] </span>
+                </p>
+            </div>
+
+            <div id="previewDiv">
+                <div id="full-view" class="pic-view">
+                    <p> Full Image: </p>
+                    <img id="full" src="" />
+                </div>
+
+                <div id="thumbnail-view" class="pic-view">
+                    <p> Thumbnail: </p>
+                    <div  class="container">
+                        <img id="thumbnail" src=""/>
+                    </div>
+                </div>
+
+                <p class="edit" onclick="edit_mode()">
+                <span class="brace"> [ </span> Edit Thumbnail <span class="brace">] </span>
+                </p>
+
+            </div>
+
+            <!-- We'll write the selection bounding box parameters to these fields. -->
+            X: <input id="selectX" type="text" name="selectionX"/><br />
+            Y: <input id="selectY" type="text" name="selectionY"/><br />
+            Width: <input id="selectWidth" type="text" name="selectionWidth"/><br />
+            Height: <input id="selectHeight" type="text" name="selectionHeight"/><br /><br />
+
+            <input type="submit" value="Submit" />
+        </form>
+    </body>
 </html>

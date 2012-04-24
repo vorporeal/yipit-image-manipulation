@@ -1,0 +1,74 @@
+﻿#mainCanvas
+{
+margin-top:5px;
+visibility: hidden;
+margin-right:20px;
+
+}
+
+.pic-view
+{
+	height: 125px;
+	display:inline-block;
+	margin-right: 20px;
+}
+
+.pic-view p
+{
+	margin-bottom: 0px;
+	margin-top:5px;
+}
+
+.container
+{
+	width:100px;
+	height: 100px;
+	overflow:hidden;
+}
+
+#thumbnail{
+	position:relative;
+	width: 100px;
+	height: 100px;
+}
+
+#full{
+	width:100px;
+	height:100px;
+}
+
+.brace{
+	color: #0033FF;
+	font-weight: "bold";
+	font-size: 20px;
+}
+
+.edit{
+	display:inline-block;
+	vertical-align: bottom;
+	margin-bottom: 0px;
+}
+
+.edit:hover
+{
+	cursor:pointer;
+	margin-bottom: 0px;
+}
+
+#mainCanvas{
+display: inline-block;
+visibility: visible;
+}
+
+#editDiv{
+	overflow:hidden;
+	height: 0px;
+-webkit-user-select: none; 
+}
+
+#previewDiv{
+	height: 150px;
+	overflow:hidden;
+	position: relative;
+	top:0px;
+}
