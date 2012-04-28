@@ -5,8 +5,6 @@ var lastMouseX;
 var lastMouseY;
 
 $(document).ready(function(){
-  var fileInput = $('#id_original_image')[0];
-  fileInput.addEventListener('change', load_pic);
 	var canvas = $('#mainCanvas')[0];
 	canvas.addEventListener('mousemove', mouseDrag);
 	canvas.addEventListener('mouseup', mouseUp);
@@ -95,10 +93,10 @@ function updateSelection()
 
 function fillSelectionForm()
 {
-	$('#id_xCorner')[0].value= Math.floor(selection.X);
-	$('#id_yCorner')[0].value = Math.floor(selection.Y);
-	$('#id_width')[0].value = Math.floor(selection.width);
-	$('#id_height')[0].value = Math.floor(selection.height);	
+	$('#selectX')[0].value= Math.floor(selection.X);
+	$('#selectY')[0].value = Math.floor(selection.Y);
+	$('#selectWidth')[0].value = Math.floor(selection.width);
+	$('#selectHeight')[0].value = Math.floor(selection.height);	
 }
 
 //calls updateSelection
@@ -143,8 +141,9 @@ function updateCanvas()
 	fillSelectionForm();
 }
 
-function load_pic(evt)
+function load_pic()
 {
+	var path = $('#path')[0].value;
 	var thumbnail = $('#thumbnail')[0];
 	var full = $('#full')[0];
 	var full_style = $('#full');
@@ -155,19 +154,15 @@ function load_pic(evt)
 	{
 		var original_width = imgObj.width;
 		var original_height = imgObj.height;
-
-    $('#id_orig_width')[0].value = original_width;
-    $('#id_orig_height')[0].value = original_height;
-
 		//Deal with preview mode
-		full.src = imgObj.src;
+		full.src = path;
 		full_style.css('height', thumb_dimension);
 		full_style.css('width', (full.height/original_height)*original_width);
 		
 		//Deal with edit mode
 		var c_height = $('#mainCanvas')[0].height;
 		var c_width = c_height/imgObj.height*imgObj.width;
-		$('#mainCanvas')[0].width = c_width;
+		$('#mainCanvas')[0].width = Math.floor(c_width);
 		
 		//set selection
 		if (c_width > c_height)
@@ -186,26 +181,11 @@ function load_pic(evt)
 		}
 		selection.rightX = selection.X + selection.width;
 		selection.botY = selection.Y + selection.height;
-		thumbnail.src = imgObj.src;
+		thumbnail.src = path;
 		updateThumbnail();
 		updateCanvas();
 	}
-	
-  var files = evt.target.files;
-
-  for (var i = 0, f; f= files[i]; i++) {
-    if (!f.type.match('image.*')) {
-      continue;
-    }
-
-    var reader = new FileReader();
-    reader.onload = (function(theFile) {
-      return function(e) {
-        imgObj.src = e.target.result;
-      };
-    }) (f);
-    reader.readAsDataURL(f);
-  }
+	imgObj.src = path;
 }
 
 function mouseDown(e)
@@ -447,32 +427,32 @@ function mouseDrag(e)
 				}
 			break;
 			case 5:
-				var newX = Math.floor(selection.lastSelectionX + changeX);
-				var newY = Math.floor(selection.lastSelectionY + changeY);
-				if (newX >= 0 && newX+Math.floor(selection.width) <= canvas.width)
+				var newX = selection.lastSelectionX + changeX;
+				var newY = selection.lastSelectionY + changeY;
+				if (newX+Math.floor(selection.width) > canvas.width)
 				{
-					selection.X = newX;
-				}
-				else if (newX+Math.floor(selection.width) > canvas.width)
-				{
-					selection.X = canvas.width-selection.width;
+					selection.X = canvas.width-Math.floor(selection.width);
 				}
 				else if (newX < 0)
 				{
 					selection.X = 0;
 				}
-				
-				if (newY >= 0 && newY+Math.floor(selection.height) <= canvas.height)
+				else if ( newX >= 0 && selection.width <= canvas.width)
 				{
-					selection.Y = newY;
+					selection.X = newX;	
 				}
-				else if (newY+Math.floor(selection.height) > canvas.height)
+				
+				if (newY+Math.floor(selection.height) > canvas.height)
 				{
-					selection.Y = canvas.height-selection.height;
+					selection.Y = canvas.height-Math.floor(selection.height);
 				}
 				else if (newY < 0)
 				{
 					selection.Y = 0;
+				}
+				else if (newY >= 0 && newY+Math.floor(selection.height) <= canvas.height)
+				{
+					selection.Y = newY;
 				}
 			break;
 			default:
