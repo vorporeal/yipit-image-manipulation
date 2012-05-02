@@ -13,17 +13,14 @@ def cache_to_thumb(instance, path, specname, extension):
 
 def getCrop(instance, file):
   print(vars(instance))
-  scale = min(instance.orig_width, instance.orig_height) / 180.0
-  theWidth = int(round(instance.width * scale))
-  theHeight = int(round(instance.height * scale))
-  theX = -1 * int(round(instance.xCorner * scale))
-  theY = -1 * int(round(instance.yCorner * scale))
+  theWidth = instance.width
+  theHeight = instance.height
+  theX = -1 * instance.xCorner
+  theY = -1 * instance.yCorner
   return [Crop(width=theWidth, height=theHeight, x=theX, y=theY)]
 
 # Create your models here.
 class DealPhoto(models.Model):
-    orig_width = models.IntegerField()
-    orig_height = models.IntegerField()
     width = models.IntegerField()
     height = models.IntegerField()
     xCorner = models.IntegerField()
