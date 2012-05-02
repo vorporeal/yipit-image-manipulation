@@ -102,5 +102,11 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'imagekit',
-    'testsite'
+    'storages',
+    'testsite',
 )
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
+AWS_ACCESS_KEY_ID = 'AKIAI5NFMERMGIVFC3KA'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'Yipit-Images'

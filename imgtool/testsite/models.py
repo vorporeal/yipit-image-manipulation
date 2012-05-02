@@ -2,6 +2,7 @@ import os
 
 from django.db import models
 from django.forms import ModelForm
+from django.core.files.storage import default_storage
 from imagekit.models.fields import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors import Crop
