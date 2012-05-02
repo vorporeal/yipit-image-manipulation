@@ -43,9 +43,9 @@ class DealPhoto(models.Model):
         super(DealPhoto, self).save(*args, **kwargs)
 
         test = DealPhoto.objects.all()[DealPhoto.objects.count() - 1]
-        test.cropped.width
-        test.api_large.width
-        test.api_small.width
+        #test.cropped.width
+        #test.api_large.width
+        #test.api_small.width
 
 class DealPhotoForm(ModelForm):
     class Meta:
