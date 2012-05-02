@@ -156,9 +156,6 @@ function load_pic(evt)
 		var original_width = imgObj.width;
 		var original_height = imgObj.height;
 
-    $('#id_orig_width')[0].value = original_width;
-    $('#id_orig_height')[0].value = original_height;
-
 		//Deal with preview mode
 		full.src = imgObj.src;
 		full_style.css('height', thumb_dimension);
