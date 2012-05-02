@@ -11,7 +11,6 @@ $(document).ready(function(){
 	canvas.addEventListener('mousemove', mouseDrag);
 	canvas.addEventListener('mouseup', mouseUp);
 	canvas.addEventListener('mousedown', mouseDown);
-	canvas.addEventListener('mouseout', mouseUp);
 	canvas.draggable = false;
 });
 
@@ -95,10 +94,10 @@ function updateSelection()
 
 function fillSelectionForm()
 {
-	$('#id_xCorner')[0].value= Math.floor(selection.X);
-	$('#id_yCorner')[0].value = Math.floor(selection.Y);
-	$('#id_width')[0].value = Math.floor(selection.width);
-	$('#id_height')[0].value = Math.floor(selection.height);	
+	$('#id_xCorner')[0].value= Math.floor(selection.origX);
+	$('#id_yCorner')[0].value = Math.floor(selection.origY);
+	$('#id_width')[0].value = Math.floor(selection.origWidth);
+	$('#id_height')[0].value = Math.floor(selection.origHeight);	
 }
 
 //calls updateSelection
@@ -140,6 +139,7 @@ function updateCanvas()
 	var c_height = $('#mainCanvas')[0].height;
 	ctx.drawImage(imgObj, 0,0, c_width, c_height); 
 	selection.draw();
+	updateSelection();
 	fillSelectionForm();
 }
 
@@ -447,32 +447,32 @@ function mouseDrag(e)
 				}
 			break;
 			case 5:
-				var newX = Math.floor(selection.lastSelectionX + changeX);
-				var newY = Math.floor(selection.lastSelectionY + changeY);
-				if (newX >= 0 && newX+Math.floor(selection.width) <= canvas.width)
+				var newX = selection.lastSelectionX + changeX;
+				var newY = selection.lastSelectionY + changeY;
+				if (newX+Math.floor(selection.width) > canvas.width)
 				{
-					selection.X = newX;
-				}
-				else if (newX+Math.floor(selection.width) > canvas.width)
-				{
-					selection.X = canvas.width-selection.width;
+					selection.X = canvas.width-Math.floor(selection.width);
 				}
 				else if (newX < 0)
 				{
 					selection.X = 0;
 				}
-				
-				if (newY >= 0 && newY+Math.floor(selection.height) <= canvas.height)
+				else if ( newX >= 0 && selection.width <= canvas.width)
 				{
-					selection.Y = newY;
+					selection.X = newX;	
 				}
-				else if (newY+Math.floor(selection.height) > canvas.height)
+				
+				if (newY+Math.floor(selection.height) > canvas.height)
 				{
-					selection.Y = canvas.height-selection.height;
+					selection.Y = canvas.height-Math.floor(selection.height);
 				}
 				else if (newY < 0)
 				{
 					selection.Y = 0;
+				}
+				else if (newY >= 0 && newY+Math.floor(selection.height) <= canvas.height)
+				{
+					selection.Y = newY;
 				}
 			break;
 			default:
