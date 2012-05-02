@@ -13,11 +13,11 @@ def cache_to_thumb(instance, path, specname, extension):
 
 def getCrop(instance, file):
   print(vars(instance))
-  scale = instance.orig_width / 200;
-  theWidth = instance.width * scale;
-  theHeight = instance.height * scale;
-  theX = -1 * instance.xCorner * scale;
-  theY = -1 * instance.yCorner * scale;
+  scale = min(instance.orig_width, instance.orig_height) / 180.0;
+  theWidth = round(instance.width * scale);
+  theHeight = round(instance.height * scale);
+  theX = -1 * round(instance.xCorner * scale);
+  theY = -1 * round(instance.yCorner * scale);
   return [Crop(width=theWidth, height=theHeight, x=theX, y=theY)]
 
 # Create your models here.
