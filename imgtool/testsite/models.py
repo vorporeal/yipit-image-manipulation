@@ -3,6 +3,7 @@ import os
 from django.db import models
 from django.forms import ModelForm
 from django.core.files.storage import default_storage
+from django.db.models.signals import post_save
 from imagekit.models.fields import ImageSpecField
 from imagekit.processors import ResizeToFit
 from imagekit.processors import Crop
@@ -42,10 +43,17 @@ class DealPhoto(models.Model):
     def save(self, *args, **kwargs):
         super(DealPhoto, self).save(*args, **kwargs)
 
-        test = DealPhoto.objects.all()[DealPhoto.objects.count() - 1]
+        #test = DealPhoto.objects.all()[DealPhoto.objects.count() - 1]
         #test.cropped.width
         #test.api_large.width
         #test.api_small.width
+		
+	def post_save_receiver(sender, instance=None, created=False, raw=False, **kwargs):
+		instance.cropped.url
+		instance.api_large.url
+		instance.api_small.url
+	
+	post_save.connect(post_save_receiver)
 
 class DealPhotoForm(ModelForm):
     class Meta:
