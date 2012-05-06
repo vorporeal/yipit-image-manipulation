@@ -116,6 +116,7 @@ function updateThumbnail()
 	thumbnail_style.css('top', -selection.origY*Y_scale);
 }
 
+//Go to edit mode
 function edit_mode()
 {
 	if (imgObj != undefined && imgObj.complete)
@@ -125,6 +126,7 @@ function edit_mode()
 	}
 }
 
+//Go to preview mode
 function preview_mode()
 { 
 	$('#editDiv').animate({height: '0px'}, {duration: 500, queue:false});
