@@ -1,9 +1,6 @@
-Make sure that Yipit's django-imagekit fork is added to your PYTHONPATH.
-For example:
+Run 'source setup-pythonpath.sh' to add the required libraries to your PYTHONPATH.
 
-    $ PYTHONPATH=$PYTHONPATH:/u/dfstern/course/cs132/django-imagekit ./manage.py test
-
-would run the manage.py script, and try to test the codebase.
+Run './manage.py runserver' to run the server.
 
 In addition, for the static data to be properly served, either this folder should be located at:
 
