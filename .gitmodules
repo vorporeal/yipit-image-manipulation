@@ -1,0 +1,9 @@
+[submodule "django-imagekit"]
+	path = django-imagekit
+	url = git://github.com/jdriscoll/django-imagekit.git
+[submodule "boto"]
+	path = boto
+	url = git://github.com/boto/boto.git
+[submodule "django-storages"]
+	path = django-storages
+	url = git://github.com/simplegeo/django-storages.git
