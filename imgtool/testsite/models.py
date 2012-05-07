@@ -14,12 +14,17 @@ def cache_to_thumb(instance, path, specname, extension):
     return "photos/processed/" + specname + "/" + os.path.splitext(filename)[0] + ".jpg"
 
 def getCrop(instance, file):
-  print(vars(instance))
-  theWidth = instance.width
-  theHeight = instance.height
-  theX = -1 * instance.xCorner
-  theY = -1 * instance.yCorner
-  return [Crop(width=theWidth, height=theHeight, x=theX, y=theY)]
+    print(vars(instance))
+    theWidth = instance.width
+    theHeight = instance.height
+    theX = -1 * instance.xCorner
+    theY = -1 * instance.yCorner
+    return [Crop(width=theWidth, height=theHeight, x=theX, y=theY)]
+
+def post_save_receiver(sender, instance=None, created=False, raw=False, **kwargs):
+    instance.cropped.width
+    instance.api_large.width
+    instance.api_small.width
 
 # Create your models here.
 class DealPhoto(models.Model):
@@ -31,29 +36,16 @@ class DealPhoto(models.Model):
     original_image = models.ImageField(upload_to='photos')
     
     cropped = ImageSpecField(processors = getCrop,
-            image_field='original_image', format='JPEG',
-            cache_to=cache_to_thumb, options={'quality': 90})
+        image_field='original_image', format='JPEG',
+        cache_to=cache_to_thumb, options={'quality': 90})
     api_large = ImageSpecField([ResizeToFit(width=372)],
-            image_field='cropped', format='JPEG',
-            cache_to=cache_to_thumb, options={'quality': 90})
+        image_field='cropped', format='JPEG',
+        cache_to=cache_to_thumb, options={'quality': 90})
     api_small = ImageSpecField([ResizeToFit(width=212)],
-            image_field='cropped', format='JPEG',
-            cache_to=cache_to_thumb, options={'quality': 90})
+        image_field='cropped', format='JPEG',
+        cache_to=cache_to_thumb, options={'quality': 90})
 
-    def save(self, *args, **kwargs):
-        super(DealPhoto, self).save(*args, **kwargs)
-
-        #test = DealPhoto.objects.all()[DealPhoto.objects.count() - 1]
-        #test.cropped.width
-        #test.api_large.width
-        #test.api_small.width
-		
-	def post_save_receiver(sender, instance=None, created=False, raw=False, **kwargs):
-		instance.cropped.url
-		instance.api_large.url
-		instance.api_small.url
-	
-	post_save.connect(post_save_receiver)
+post_save.connect(post_save_receiver, sender=DealPhoto)
 
 class DealPhotoForm(ModelForm):
     class Meta:
